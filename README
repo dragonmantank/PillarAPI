@@ -1,0 +1,5 @@
+PillarAPI
+=========
+
+PillarAPI is a framework for building a REST API. It currently supports
+GET, POST, PUT, and DELETE requests.
