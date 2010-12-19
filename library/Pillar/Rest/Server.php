@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * REST Server implementation
+ * Takes (or creates) a request and routes it through the system
+ *
+ * @author Chris Tankersley
+ * @copyright 2010 Chris Tankersley <chris@ctankersley.com>
+ * @package Pillar_Rest
+ */
 class Pillar_Rest_Server
 {
     /**

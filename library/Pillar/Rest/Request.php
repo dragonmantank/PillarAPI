@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Request that has been sent to the server
+ * Takes either an array or will user the $_SERVER global to dissect and
+ * interpret. Exposes elements of the system request into an object.
+ *
+ * @author Chris Tankersley
+ * @copyright 2010 Chris Tankersley <chris@ctankersley.com>
+ * @package Pillar_Rest
+ */
 class Pillar_Rest_Request
 {
     /**

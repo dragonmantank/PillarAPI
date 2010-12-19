@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Response to be sent back to the client
+ * Objectified response that should be sent back to the client. Sets the
+ * content and response codes.
+ *
+ * @author Chris Tankersley
+ * @copyright 2010 Chris Tankersley <chris@ctankersley.com>
+ * @package Pillar_Rest
+ */
 class Pillar_Rest_Response
 {
     /**
