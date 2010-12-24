@@ -7,8 +7,8 @@ class Pillar_Api_Rest_RequestTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $_GET = array('data' => json_encode(array('Name' => 'Bob')));
-        $_POST = array('data' => json_encode(array('Name' => 'Jill')));
+        $_GET = array('Name' => 'Bob');
+        $_POST = array('Name' => 'Jill');
     }
 
     /**
@@ -66,7 +66,7 @@ class Pillar_Api_Rest_RequestTest extends PHPUnit_Framework_TestCase
         $vars = $request->getRequestVars();
 
         $this->assertEquals(1, count($vars));
-        $this->assertEquals('Bob', $vars->Name);
+        $this->assertEquals('Bob', $vars['Name']);
     }
 
     /**
@@ -80,7 +80,7 @@ class Pillar_Api_Rest_RequestTest extends PHPUnit_Framework_TestCase
         $vars = $request->getRequestVars();
 
         $this->assertEquals(1, count($vars));
-        $this->assertEquals('Jill', $vars->Name);
+        $this->assertEquals('Jill', $vars['Name']);
     }
 
     public function testGetRequestUri()
@@ -159,7 +159,19 @@ class Pillar_Api_Rest_RequestTest extends PHPUnit_Framework_TestCase
 
         $request = new Pillar_Rest_Request($raw);
 
-
         $this->assertEquals('yar', $request->getUri());
+    }
+
+    public function testGetQuery()
+    {
+        $raw = array(
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI' => '/',
+            'SCRIPT_NAME' => '/resource?name=Bob&id=4',
+        );
+
+        $request = new Pillar_Rest_Request($raw);
+
+        $this->assertEquals(array('name'=>'Bob', 'id'=>'4'), $request->getQuery());
     }
 }

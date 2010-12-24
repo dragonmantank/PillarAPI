@@ -88,15 +88,32 @@ class Pillar_Rest_Request
                 break;
         }
 
-        if(isset($data['data'])) {
-            return json_decode($data['data']);
-        }
+        return $data;
     }
 
     public function getIdentifier()
     {
         $uri = $this->raw_request['REQUEST_URI'];
         return substr($uri, (strrpos($uri, '/')+1));
+    }
+
+    /**
+     * Returns the query on a resource
+     * This will reinterpret GET requests. Allows queries on verbs other than
+     * GET
+     *
+     * @return array
+     */
+    public function getQuery()
+    {
+        list(, $query) = explode('?', $this->raw_request['REQUEST_URI']);
+        $params = array();
+        foreach(explode('&', $query) as $part) {
+            list($parts['key'], $parts['value']) = explode('=', $part);
+            $params[urldecode($parts['key'])] = urldecode($parts['value']);
+        }
+
+        return $params;
     }
 
     /**
