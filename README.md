@@ -66,7 +66,8 @@ The Resource takes the passed request and formulates a Pillar_Rest_Response
 object. The Response object contains an HTTP code and a textual response. The
 response can be either HTML or JSON.
 
-`class Myresource extends Pillar_Rest_Resource {
+`
+class Myresource extends Pillar_Rest_Resource {
     public function get(Pillar_Rest_Request $request) {
         $query = $request->getQuery();
         // Do some stuff and save it to $output
@@ -90,7 +91,8 @@ response can be either HTML or JSON.
         }
         return $response;
     }
-}`
+}
+`
 
 ## Server
 
@@ -101,7 +103,9 @@ depending on if there were exceptions and the type, renders a response.
 
 The basic usage for the server is:
 
-`// Tell PillarAPI where your resources are located
+`
+// Tell PillarAPI where your resources are located
 Pillar_Rest_Resource_Manager::addNamespace('My_Resource', 'My/Resource');
 $server = new Pillar_Rest_Server(new Pillar_Rest_Request());
-$server->dispatch();`
+$server->dispatch();
+`
