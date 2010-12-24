@@ -168,6 +168,7 @@ class Pillar_Api_Rest_RequestTest extends PHPUnit_Framework_TestCase
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI' => '/',
             'SCRIPT_NAME' => '/resource?name=Bob&id=4',
+            'QUERY_STRING' => 'name=Bob&id=4',
         );
 
         $request = new Pillar_Rest_Request($raw);

@@ -106,9 +106,8 @@ class Pillar_Rest_Request
      */
     public function getQuery()
     {
-        list(, $query) = explode('?', $this->raw_request['REQUEST_URI']);
         $params = array();
-        foreach(explode('&', $query) as $part) {
+        foreach(explode('&', $this->raw_request['QUERY_STRING']) as $part) {
             list($parts['key'], $parts['value']) = explode('=', $part);
             $params[urldecode($parts['key'])] = urldecode($parts['value']);
         }
