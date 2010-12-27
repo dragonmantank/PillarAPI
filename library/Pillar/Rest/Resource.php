@@ -15,6 +15,33 @@
 abstract class Pillar_Rest_Resource
 {
     /**
+     * Response
+     * @var Pillar_Rest_Response
+     */
+    protected $response;
+
+    /**
+     * Returns the response
+     * @return Pillar_Rest_Response
+     */
+    public function getResponse()
+    {
+        if($this->response !== null) {
+            return $this->response;
+        }
+
+        throw new Exception('No response has been set');
+    }
+
+    /**
+     * Initializes the resource
+     */
+    public function init()
+    {
+        $this->response = new Pillar_Rest_Response();
+    }
+
+    /**
      * Runs the request against the resource
      * Attempts to call the appropriate verb on the resource
      *
@@ -23,15 +50,16 @@ abstract class Pillar_Rest_Resource
      */
     public function run(Pillar_Rest_Request $request)
     {
+        $this->init();
+        
         $action = $request->getMethod();
         if(method_exists($this, $action)) {
-            return $this->$action($request);
+            $this->$action($request);
         } else {
-            $response = new Pillar_Rest_Response();
-            $response->setCode(405);
-            $response->setBody('Resource '.get_class($this).' does not support the '.strtoupper($request->getMethod()).' method');
-
-            return $response;
+            $this->response->setCode(405);
+            $this->response->setBody('Resource '.get_class($this).' does not support the '.strtoupper($request->getMethod()).' method');
         }
+
+        return $this->getResponse();
     }
 }
