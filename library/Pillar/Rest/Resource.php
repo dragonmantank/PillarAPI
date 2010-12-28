@@ -15,10 +15,25 @@
 abstract class Pillar_Rest_Resource
 {
     /**
+     * Request
+     * @var Pillar_Rest_Request
+     */
+    protected $request;
+
+    /**
      * Response
      * @var Pillar_Rest_Response
      */
     protected $response;
+
+    /**
+     * Returns the request
+     * @return Pillar_Rest_Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
 
     /**
      * Returns the response
@@ -50,11 +65,13 @@ abstract class Pillar_Rest_Resource
      */
     public function run(Pillar_Rest_Request $request)
     {
+        $this->request = $request;
+        
         $this->init();
         
         $action = $request->getMethod();
         if(method_exists($this, $action)) {
-            $this->$action($request);
+            $this->$action();
         } else {
             $this->response->setCode(405);
             $this->response->setBody('Resource '.get_class($this).' does not support the '.strtoupper($request->getMethod()).' method');

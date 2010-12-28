@@ -91,7 +91,6 @@ class Pillar_Rest_Resource_Manager
 
         foreach(explode(PATH_SEPARATOR, get_include_path()) as $dir) {
             foreach($searches as $key => $class) {
-                echo "Searching for $dir"."$class<br>";
                 if(is_file($dir.'/'.$class)) {
                     return $key.'_'.ucfirst($resource);
                 }
