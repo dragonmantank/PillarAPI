@@ -98,9 +98,7 @@ depending on if there were exceptions and the type, renders a response.
 
 The basic usage for the server is:
 
-`
-// Tell PillarAPI where your resources are located
-Pillar_Rest_Resource_Manager::addNamespace('My_Resource', 'My/Resource');
-$server = new Pillar_Rest_Server(new Pillar_Rest_Request());
-$server->dispatch();
-`
+    // Tell PillarAPI where your resources are located
+    Pillar_Rest_Resource_Manager::addNamespace('My_Resource', 'My/Resource');
+    $server = new Pillar_Rest_Server(new Pillar_Rest_Request());
+    $server->dispatch();
