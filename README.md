@@ -66,33 +66,28 @@ The Resource takes the passed request and formulates a Pillar_Rest_Response
 object. The Response object contains an HTTP code and a textual response. The
 response can be either HTML or JSON.
 
-`
-class Myresource extends Pillar_Rest_Resource {
-    public function get(Pillar_Rest_Request $request) {
-        $query = $request->getQuery();
-        // Do some stuff and save it to $output
-        $response = new Pillar_Rest_Response();
-        $response->setBody($output);
-        $response->setContentType(Pillar_Rest_Response::CONTENT_JSON);
-        return $response;
-    }
-
-    public function put(Pillar_Rest_Request $request) {
-        $data = $request->getRequestVars();
-        // Try and create resource, and check if created
-        $response = new Pillar_Rest_Response();
-        if($created) {
-            $response->setCode(201);
-            $response->setBody(json_encode(array('id'=>$id)));
-            $response->setContentType(Pillar_Rest_Response::CONTENT_JSON);
-        } else {
-            $response->setCode(500);
-            $response->setBody('Unable to create: ".$error);
+    class Myresource extends Pillar_Rest_Resource {
+        public function get() {
+            $query = $this->getRequest()->getQuery();
+            // Do some stuff and save it to $output
+            $this->response->setBody($output);
+            $this->response->setContentType(Pillar_Rest_Response::CONTENT_JSON);
         }
-        return $response;
+
+        public function put() {
+            $data = $this->getRequest()->getRequestVars();
+            // Try and create resource, and check if created
+            $response = new Pillar_Rest_Response();
+            if($created) {
+                $this->response->setCode(201);
+                $this->response->setBody(json_encode(array('id'=>$id)));
+                $this->response->setContentType(Pillar_Rest_Response::CONTENT_JSON);
+            } else {
+                $this->response->setCode(500);
+                $this->response->setBody('Unable to create: ".$error);
+            }
+        }
     }
-}
-`
 
 ## Server
 
