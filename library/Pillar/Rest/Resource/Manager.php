@@ -16,6 +16,12 @@ class Pillar_Rest_Resource_Manager
      */
     protected static $namespaces = array();
 
+	/**
+	 * Default resource that we need to fall back to
+	 * @var string;
+	 */
+	protected static $defaultResource;
+
     /**
      * Adds a namespace into the stack
      * @param string $class
@@ -25,6 +31,15 @@ class Pillar_Rest_Resource_Manager
     {
         static::$namespaces[$class] = $path;
     }
+
+	/**
+	 * Defines the default resource to drop to, if needed
+	 * @param string $resource
+	 */
+	public static function defaultResource($resource)
+	{
+		static::$defaultResource = $resource;
+	}
 
     /**
      * Returns a Resource object
@@ -46,7 +61,7 @@ class Pillar_Rest_Resource_Manager
             return $object;
         }
 
-        throw new Pillar_Rest_Exception_NonexistantResource('Resource '.$resource.' does not exist');
+		throw new Pillar_Rest_Exception_NonexistantResource('Resource '.$resource.' does not exist');
     }
 
     /**
@@ -65,7 +80,13 @@ class Pillar_Rest_Resource_Manager
      */
     public static function getResourceName(Pillar_Rest_Request $request)
     {
-        list($name) = explode('?', $request->getUri());
+		try {
+			$uri = $request->getUri();
+		} catch(Pillar_Rest_Exception_NoResourceSpecified $e) {
+			$uri = static::$defaultResource;
+		}
+
+        list($name) = explode('?', $uri);
         list($name) = explode('/', $name);
 
         return $name;
